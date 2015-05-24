@@ -9,27 +9,27 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author S.Bachmann
  */
-public class Nieghborhood extends LinkedList <Boxlet> 
+public class Neighborhood extends LinkedList <Boxlet>
 {
 	private static final long serialVersionUID = 1L;
 	
 	public static LinkedList <String> types = new LinkedList<> ();
 	
-	private final String type; 
+	private final Game.NeighboorhoodType type;
 	private final LinkedList <Integer> fieldSize;
 	private final Integer radius;
-	private final Integer wrap;
+	private final Game.NeighboorhoodWarp wrap;
 	private final Boxlet boxlet;
 	
-	public Nieghborhood (Boxlet k)
+	public Neighborhood (Boxlet k)
 	{
 		boxlet = k;
 		Game spiel = boxlet.game;
 		
-		type = spiel.neighborType;
+		type = spiel.neighborhoodType;
 		fieldSize = spiel.fieldSize;
-		radius = spiel.reighborRadius;
-		wrap = spiel.neigborWrap;
+		radius = spiel.neighborhoodRadius;
+		wrap = spiel.neighborhoodWrap;
 		
 		for (LinkedList <Integer> coords : findNeigbors ())
 		{ add (spiel.getBoxlet (coords)); }
@@ -45,7 +45,7 @@ public class Nieghborhood extends LinkedList <Boxlet>
 		
 		switch (type)
 		{
-			case "square":
+			case SQUARE:
 				for (int i = 0; i < fieldSize.size (); i++)
 				{
 					neighs.add ((LinkedList <Integer>) position.clone ());
@@ -71,7 +71,7 @@ public class Nieghborhood extends LinkedList <Boxlet>
 				break;
 				
 				
-			case "plus":
+			case PLUS:
 				for (int i = 0; i < fieldSize.size (); i++)
 				{
 					for (int j = 1; j <= radius; j++)
@@ -90,7 +90,7 @@ public class Nieghborhood extends LinkedList <Boxlet>
 				
 				break;
 				
-			case "knight":
+			case KNIGHT:
 				for (int j = 0; j < 4; j++)
 				{
 					LinkedList <Integer> n1 = (LinkedList <Integer>) position.clone ();
@@ -104,10 +104,6 @@ public class Nieghborhood extends LinkedList <Boxlet>
 					neighs.add (n2);
 				}
 				break;
-			default:
-				break;
-				
-
 		}
 		
 		for (LinkedList <Integer> n : neighs)
@@ -116,20 +112,18 @@ public class Nieghborhood extends LinkedList <Boxlet>
 			switch (wrap)
 			{
 				
-				case 1:	// torus.
+				case TORUS:
 					for (int i = 0; i < fieldSize.size (); i++)
 					{ n.set (i, (n.get (i) + fieldSize.get (i)) % fieldSize.get (i)); }
 					break;
-				case 2: // reflect. todo. doesn't work. can't brain.
+                case REFLECT: //TODO: doesn't work. can't brain.
 					for (int i = 0; i < fieldSize.size (); i++)
 					{ n.set (i, fieldSize.get (i) - ((n.get (i) + fieldSize.get (i)) % fieldSize.get (i) )); }
 					break;
-				default: case 0:
-					neighs.remove (n); break;
-					
+				case NO:
+					neighs.remove (n);
+                    break;
 			}
-			
-			
 		}
 		
 		return neighs;

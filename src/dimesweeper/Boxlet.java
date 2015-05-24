@@ -3,11 +3,11 @@
  */
 package dimesweeper;
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
-import javax.swing.JToggleButton;
 
 /**
  * @author S.Bachmann
@@ -19,7 +19,7 @@ public class Boxlet extends JToggleButton implements MouseListener
 	public LinkedList <Integer> position;
 	public final Game game;
 	
-	private Nieghborhood neighbors = null;
+	private Neighborhood neighbors = null;
 	
 	public Boxlet (LinkedList <Integer> position, Game game)
 	{
@@ -28,9 +28,9 @@ public class Boxlet extends JToggleButton implements MouseListener
 		addMouseListener (this);
 	}
 	
-	public Nieghborhood getNeighbors ()
+	public Neighborhood getNeighbors ()
 	{
-		if (neighbors == null) neighbors = new Nieghborhood (this);
+		if (neighbors == null) neighbors = new Neighborhood(this);
 		return neighbors;
 	}
 	

@@ -3,11 +3,11 @@
  */
 package dimesweeper;
 
-import java.awt.GridLayout;
-import java.awt.event.*;
-import java.util.LinkedList;
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeEvent;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.*;
 
 /**
  * @author S.Bachmann
@@ -15,9 +15,9 @@ import javax.swing.event.*;
 public class Launcher extends JFrame
 {
 	private static final long serialVersionUID = 1L;
-	
-	private static final String[] strNeighs = {"square", "plus", "knight"};
-	private static final String[] strWraps = {"no", "torus", "reflect (borken)"};
+
+    private static final Map<String, Game.NeighboorhoodType> neighboorhoodTypeNames;
+    private static final Map<String, Game.NeighboorhoodWarp> neighboorhoodWarpNames;
 	
 	private final JSplitPane pnAll;
 	
@@ -35,7 +35,7 @@ public class Launcher extends JFrame
 	private final JSpinner spRadius;
 	private final JComboBox <String> cbNeigs, cbWraps;
 	
-	private final DimsFeld dimsField;
+	private final DimsField dimsField;
 
 	
 	/**
@@ -52,7 +52,7 @@ public class Launcher extends JFrame
 		setVisible (true);
 		setDefaultCloseOperation (EXIT_ON_CLOSE);
 		
-		setContentPane (pnAll = new JSplitPane (JSplitPane.HORIZONTAL_SPLIT, pnOptions = new JPanel (), this.dimsField = new DimsFeld ()));
+		setContentPane (pnAll = new JSplitPane (JSplitPane.HORIZONTAL_SPLIT, pnOptions = new JPanel (), this.dimsField = new DimsField()));
 
 		pnOptions.setLayout (new GridLayout (8, 1));
 		
@@ -70,24 +70,26 @@ public class Launcher extends JFrame
 		pnOptions.add(spMines = new JSpinner (spModelMines = new SpinnerNumberModel (0,0,0,1))); 
 		
 		spMines.addChangeListener ((ChangeEvent e) ->
-		{ slMines.setValue ((int) spMines.getValue ()); });
+                slMines.setValue ((int) spMines.getValue ()));
 		
 		pnOptions.add(slMines = new JSlider (0, 0, 0));
 		slMines.addChangeListener ((ChangeEvent e) ->
-		{ spMines.setValue ( slMines.getValue ()); });
+                spMines.setValue ( slMines.getValue ()));
 		
 		pnOptions.add(new JLabel ("neighborhood:"));
-		pnOptions.add (cbNeigs = new JComboBox<> (strNeighs));
+        Set<String> strings = neighboorhoodTypeNames.keySet();
+        pnOptions.add (cbNeigs = new JComboBox<> (strings.toArray(new String[strings.size()])));
 		
 		pnOptions.add (new JLabel ("radius:"));
 		pnOptions.add(spRadius = new JSpinner (new SpinnerNumberModel (1, 1, 9000, 1)));
 		
 		pnOptions.add(new JLabel ("wrapping:"));
-		pnOptions.add (cbWraps = new JComboBox<> (strWraps));
+        strings = neighboorhoodWarpNames.keySet();
+		pnOptions.add (cbWraps = new JComboBox<> (strings.toArray(new String[strings.size()])));
 
 		pnOptions.add(btRun = new JButton ("launch game"));
 		btRun.addActionListener ((ActionEvent e) ->
-		{ launch (); });
+                launch ());
 			
 		pack ();
 	}
@@ -100,10 +102,10 @@ public class Launcher extends JFrame
 			(
 				dimsField.getValue (),
 				(Integer) spMines.getValue (),
-				(String) cbNeigs.getSelectedItem (),
+                neighboorhoodTypeNames.get(cbNeigs.getSelectedItem ()),
 				(Integer) spRadius.getValue (),
-				cbWraps.getSelectedIndex ()
-			);
+				neighboorhoodWarpNames.get(cbWraps.getSelectedItem())
+                );
 		}
 		catch (Exception e)
 		{
@@ -112,12 +114,12 @@ public class Launcher extends JFrame
 		}
 	}
 
-	private class DimsFeld extends JPanel
+	private class DimsField extends JPanel
 	{
 		private static final long serialVersionUID = 1L;
 		public LinkedList <JSpinner> spinners;
 		
-		public DimsFeld ()
+		public DimsField ()
 		{
 			this.spinners = new LinkedList <> ();
 			update ();
@@ -156,4 +158,18 @@ public class Launcher extends JFrame
 			return result;
 		}
 	}
+
+    static {
+        Map<String, Game.NeighboorhoodType> typeNames = new HashMap<>();
+        typeNames.put("square", Game.NeighboorhoodType.SQUARE);
+        typeNames.put("plus", Game.NeighboorhoodType.PLUS);
+        typeNames.put("knight", Game.NeighboorhoodType.KNIGHT);
+        neighboorhoodTypeNames = Collections.unmodifiableMap(typeNames);
+
+        Map<String, Game.NeighboorhoodWarp> typeWarps = new HashMap<>();
+        typeWarps.put("no", Game.NeighboorhoodWarp.NO);
+        typeWarps.put("torus", Game.NeighboorhoodWarp.TORUS);
+        typeWarps.put("reflect (borken)", Game.NeighboorhoodWarp.REFLECT);
+        neighboorhoodWarpNames = Collections.unmodifiableMap(typeWarps);
+    }
 }
