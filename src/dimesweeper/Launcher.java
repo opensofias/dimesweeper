@@ -70,11 +70,11 @@ public class Launcher extends JFrame
 		pnOptions.add(spMines = new JSpinner (spModelMines = new SpinnerNumberModel (0,0,0,1))); 
 		
 		spMines.addChangeListener ((ChangeEvent e) ->
-		{ slMines.setValue ((int) spMines.getValue ()); });
+                slMines.setValue ((int) spMines.getValue ()));
 		
 		pnOptions.add(slMines = new JSlider (0, 0, 0));
 		slMines.addChangeListener ((ChangeEvent e) ->
-		{ spMines.setValue ( slMines.getValue ()); });
+                spMines.setValue ( slMines.getValue ()));
 		
 		pnOptions.add(new JLabel ("neighborhood:"));
         Set<String> strings = neighboorhoodTypeNames.keySet();
@@ -102,10 +102,10 @@ public class Launcher extends JFrame
 			(
 				dimsField.getValue (),
 				(Integer) spMines.getValue (),
-				(String) cbNeigs.getSelectedItem (),
+                neighboorhoodTypeNames.get(cbNeigs.getSelectedItem ()),
 				(Integer) spRadius.getValue (),
-				cbWraps.getSelectedIndex ()
-			);
+				neighboorhoodWarpNames.get(cbWraps.getSelectedItem())
+                );
 		}
 		catch (Exception e)
 		{

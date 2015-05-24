@@ -27,8 +27,9 @@ public class Game extends JFrame
 	public Integer revealedCount = 0;
 	private Integer boxletCount = 1;
 	
-	public final String neighborhoodType;
-	public final Integer neighborhoodRadius, neighborhoodWrap;
+	public final NeighboorhoodType neighborhoodType;
+	public final Integer neighborhoodRadius;
+    public final NeighboorhoodWarp neighborhoodWrap;
 	
 	public final LinkedList <Integer> fieldSize;
 	
@@ -37,7 +38,7 @@ public class Game extends JFrame
 	public boolean firstClick, hints;
 	
 	public Game (Integer fieldX, Integer fieldY , Integer mineCount)
-	{ this (construct2D (fieldX, fieldY) , mineCount, "square", 1, 0); }
+	{ this (construct2D (fieldX, fieldY), mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWarp.NO); }
 	
 	private static LinkedList <Integer> construct2D (Integer x, Integer y)
 	{
@@ -47,10 +48,10 @@ public class Game extends JFrame
 	}
 	
 	public Game (LinkedList <Integer> fieldSize, Integer mineCount)
-	{ this (fieldSize, mineCount, "square", 1, 0); }
+	{ this (fieldSize, mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWarp.NO); }
 	
 	@SuppressWarnings("unchecked")
-	public Game (LinkedList <Integer> fieldSize, Integer mineCount, String neighborhoodType, Integer neighborhoodRadius, Integer neighborhoodWrap)
+	public Game (LinkedList <Integer> fieldSize, Integer mineCount, NeighboorhoodType neighborhoodType, Integer neighborhoodRadius, NeighboorhoodWarp neighborhoodWrap)
 	{
 		hints = true; firstClick = true;
 		
