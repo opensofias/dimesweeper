@@ -3,6 +3,7 @@
  */
 package dimesweeper;
 
+import dimesweeper.neighborhoods.Plus;
 import dimesweeper.neighborhoods.Square;
 import dimesweeper.warps.Non;
 import dimesweeper.warps.Torus;
@@ -70,11 +71,9 @@ public class Game extends JFrame
         }
 
         switch (neighborhoodWrap) {
-            case NO:
-                this.neighborhoodWrap = Non.instance;
-                break;
-            default:
-                this.neighborhoodWrap = null;
+            case NO: this.neighborhoodWrap = Non.instance; break;
+            case TORUS: this.neighborhoodWrap = Torus.instance; break;
+            default: this.neighborhoodWrap = null;
         }
 
 		flags = new HashSet <> ();
