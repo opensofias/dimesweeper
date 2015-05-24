@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author S.Bachmann
  */
-public class Nieghborhood extends LinkedList <Boxlet> 
+public class Neighborhood extends LinkedList <Boxlet>
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -21,15 +21,15 @@ public class Nieghborhood extends LinkedList <Boxlet>
 	private final Integer wrap;
 	private final Boxlet boxlet;
 	
-	public Nieghborhood (Boxlet k)
+	public Neighborhood (Boxlet k)
 	{
 		boxlet = k;
 		Game spiel = boxlet.game;
 		
-		type = spiel.neighborType;
+		type = spiel.neighborhoodType;
 		fieldSize = spiel.fieldSize;
-		radius = spiel.reighborRadius;
-		wrap = spiel.neigborWrap;
+		radius = spiel.neighborhoodRadius;
+		wrap = spiel.neighborhoodWrap;
 		
 		for (LinkedList <Integer> coords : findNeigbors ())
 		{ add (spiel.getBoxlet (coords)); }

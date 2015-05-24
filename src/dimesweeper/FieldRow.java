@@ -3,9 +3,9 @@
  */
 package dimesweeper;
 
-import java.awt.GridLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.util.LinkedList;
-import javax.swing.JPanel;
 
 /**
  * @author S.Bachmann
@@ -19,34 +19,34 @@ public class FieldRow extends JPanel
 	
 	private Boxlet boxlet = null;
 		
-	public FieldRow (LinkedList <Integer> feldGr, LinkedList <Integer> pos, Game spiel)
+	public FieldRow (LinkedList <Integer> fieldSize, LinkedList <Integer> pos, Game game)
 	{
 		this.position = pos;
-		this.subFieldSize = feldGr;
+		this.subFieldSize = fieldSize;
 		
 		if (subFieldSize.size () == 0 )
 		{
 			setLayout (new GridLayout(1, 1));
-			boxlet = new Boxlet (position, spiel);
+			boxlet = new Boxlet (position, game);
 			add (boxlet);
 		}
 		else
 		{
 			@SuppressWarnings("unchecked")
-			LinkedList <Integer> subFeldGröße = (LinkedList <Integer>) subFieldSize.clone();
-			subFeldGröße.removeFirst ();
-			Integer spacer = ((subFieldSize.size () - 1) / 2) * 4;
-			if (subFieldSize.size () % 2 == 1)
-			{ setLayout (new GridLayout(1, subFieldSize.getFirst (), spacer, spacer)); }
+			LinkedList <Integer> subFieldSize = (LinkedList <Integer>) this.subFieldSize.clone();
+			subFieldSize.removeFirst();
+			Integer spacer = ((this.subFieldSize.size() - 1) / 2) * 4;
+			if (this.subFieldSize.size() % 2 == 1)
+			{ setLayout (new GridLayout(1, this.subFieldSize.getFirst(), spacer, spacer)); }
 			else
-			{ setLayout (new GridLayout(subFieldSize.getFirst (), 1, spacer, spacer)); }
+			{ setLayout (new GridLayout(this.subFieldSize.getFirst(), 1, spacer, spacer)); }
 
-			for (int index = 0; index < subFieldSize.getFirst (); index ++)
+			for (int index = 0; index < this.subFieldSize.getFirst(); index ++)
 			{
 				@SuppressWarnings("unchecked")
-				LinkedList <Integer> subFeldPosition = (LinkedList <Integer>) position.clone ();
-				subFeldPosition.addLast (index);
-				add (new FieldRow (subFeldGröße, subFeldPosition, spiel));
+				LinkedList <Integer> subFieldPosition = (LinkedList <Integer>) position.clone ();
+				subFieldPosition.addLast(index);
+				add (new FieldRow (subFieldSize, subFieldPosition, game));
 			}
 		}
 	}
