@@ -5,7 +5,8 @@ package dimesweeper;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Deque;
 
 /**
  * @author S.Bachmann
@@ -14,12 +15,12 @@ public class FieldRow extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 	
-	private final LinkedList <Integer> position;
-	private final LinkedList <Integer> subFieldSize;
+	private final Position position;
+	private final ArrayList <Integer> subFieldSize;
 	
 	private Boxlet boxlet = null;
 		
-	public FieldRow (LinkedList <Integer> fieldSize, LinkedList <Integer> pos, Game game)
+	public FieldRow (ArrayList<Integer> fieldSize, Position pos, Game game)
 	{
 		this.position = pos;
 		this.subFieldSize = fieldSize;
@@ -33,25 +34,25 @@ public class FieldRow extends JPanel
 		else
 		{
 			@SuppressWarnings("unchecked")
-			LinkedList <Integer> subFieldSize = (LinkedList <Integer>) this.subFieldSize.clone();
-			subFieldSize.removeFirst();
+            ArrayList <Integer> subFieldSize = (ArrayList <Integer>) this.subFieldSize.clone();
+			subFieldSize.remove(0);
 			Integer spacer = ((this.subFieldSize.size() - 1) / 2) * 4;
 			if (this.subFieldSize.size() % 2 == 1)
-			{ setLayout (new GridLayout(1, this.subFieldSize.getFirst(), spacer, spacer)); }
+			{ setLayout (new GridLayout(1, this.subFieldSize.get(0), spacer, spacer)); }
 			else
-			{ setLayout (new GridLayout(this.subFieldSize.getFirst(), 1, spacer, spacer)); }
+			{ setLayout (new GridLayout(this.subFieldSize.get(0), 1, spacer, spacer)); }
 
-			for (int index = 0; index < this.subFieldSize.getFirst(); index ++)
+			for (int index = 0; index < this.subFieldSize.get(0); index ++)
 			{
 				@SuppressWarnings("unchecked")
-				LinkedList <Integer> subFieldPosition = (LinkedList <Integer>) position.clone ();
+                Position subFieldPosition = (Position) position.clone ();
 				subFieldPosition.addLast(index);
 				add (new FieldRow (subFieldSize, subFieldPosition, game));
 			}
 		}
 	}
 
-	public Boxlet getBoxlet (LinkedList <Integer> coordinates)
+	public Boxlet getBoxlet (Deque<Integer> coordinates)
 	{
 		if (subFieldSize.size () == 0 )
 			return boxlet;

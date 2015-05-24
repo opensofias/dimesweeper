@@ -100,7 +100,7 @@ public class Launcher extends JFrame
 		{
 			final Game game = new Game
 			(
-				dimsField.getValue (),
+				new ArrayList<> (dimsField.getValue ()),
 				(Integer) spMines.getValue (),
                 neighboorhoodTypeNames.get(cbNeigs.getSelectedItem ()),
 				(Integer) spRadius.getValue (),
