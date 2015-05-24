@@ -1,10 +1,10 @@
 package dimesweeper;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by David on 24.05.2015.
  */
 public interface IWarp {
-    public List<Position> applyWarp (List<Position> positions, Game game);
+    public Set<Position> applyWarp (Set<Position> positions, Game game);
 }

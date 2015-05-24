@@ -5,13 +5,11 @@ package dimesweeper;
 
 import dimesweeper.neighborhoods.Square;
 import dimesweeper.warps.Non;
+import dimesweeper.warps.Torus;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * @author S.Bachmann
@@ -66,9 +64,7 @@ public class Game extends JFrame
         this.neighborhoodRadius = neighborhoodRadius;
 
         switch (neighborhoodType) {
-            case SQUARE:
-                this.neighborhoodType = Square.instance;
-                break;
+            case SQUARE: this.neighborhoodType = Square.instance; break;
             default:
                 this.neighborhoodType = null;
         }
@@ -145,13 +141,13 @@ public class Game extends JFrame
 		JOptionPane.showMessageDialog(this, "you won." + (mineCount == 0 ? "\nfor sure." : ""), "congraz", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-    public final java.util.List<Position> findNeighbors(Position position)
+    public final Set<Position> findNeighbors(Position position)
     {
-        java.util.List<Position> neighbors;
+        Set<Position> neighbors;
         if (neighborhoodType != null) {
             neighbors = neighborhoodType.getNeighborPositions((Position) position.clone(), neighborhoodRadius);
         } else {
-            return new ArrayList<>();
+            return new HashSet<>();
         }
         if (neighborhoodWrap != null) {
             neighbors = neighborhoodWrap.applyWarp(neighbors, this);

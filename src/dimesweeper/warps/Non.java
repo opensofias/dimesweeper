@@ -7,6 +7,7 @@ import dimesweeper.Position;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by David on 24.05.2015.
@@ -17,7 +18,7 @@ public class Non implements IWarp {
     private Non () {}
 
     @Override
-    public List<Position> applyWarp (List<Position> positions, Game game) {
+    public Set<Position> applyWarp (Set<Position> positions, Game game) {
         Iterator<Position> positionIterator = positions.iterator();
         ArrayList<Integer> dimensionSizes = game.fieldSize;
 
