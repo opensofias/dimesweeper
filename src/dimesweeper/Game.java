@@ -66,6 +66,7 @@ public class Game extends JFrame
 
         switch (neighborhoodType) {
             case SQUARE: this.neighborhoodType = Square.instance; break;
+            case PLUS: this.neighborhoodType = Plus.instance; break;
             default:
                 this.neighborhoodType = null;
         }
