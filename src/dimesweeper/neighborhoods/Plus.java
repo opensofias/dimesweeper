@@ -18,7 +18,7 @@ public class Plus implements INeighborhood {
     public Set<Position> getNeighborPositions (Position pos, int radius) {
         Set<Position> ret = new HashSet<>();
 
-        for (int dim = 0; dim <= pos.size(); dim++) {
+        for (int dim = 0; dim < pos.size(); dim++) {
             for (int delta = -radius; delta <= radius; delta++) {
                 if (delta == 0) continue;
                 Position newPos = (Position) pos.clone();
