@@ -3,10 +3,11 @@
  */
 package dimesweeper;
 
+import dimesweeper.neighborhoods.Knight;
 import dimesweeper.neighborhoods.Plus;
 import dimesweeper.neighborhoods.Square;
-import dimesweeper.warps.Non;
-import dimesweeper.warps.Torus;
+import dimesweeper.wraps.Non;
+import dimesweeper.wraps.Torus;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ import java.util.*;
 public class Game extends JFrame
 {
     public enum NeighboorhoodType { SQUARE, PLUS, KNIGHT }
-    public enum NeighboorhoodWarp { NO, TORUS, REFLECT }
+    public enum NeighboorhoodWrap { NO, TORUS, REFLECT }
 
 	private static final long serialVersionUID = 1L;
 	
@@ -33,7 +34,7 @@ public class Game extends JFrame
 	
 	public final INeighborhood neighborhoodType;
 	public final Integer neighborhoodRadius;
-    public final IWarp neighborhoodWrap;
+    public final IWrap neighborhoodWrap;
 	
 	public final ArrayList<Integer> fieldSize;
 	
@@ -42,7 +43,7 @@ public class Game extends JFrame
 	public boolean firstClick, hints;
 	
 	public Game (Integer fieldX, Integer fieldY , Integer mineCount)
-	{ this (construct2D (fieldX, fieldY), mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWarp.NO); }
+	{ this (construct2D (fieldX, fieldY), mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWrap.NO); }
 	
 	private static ArrayList<Integer> construct2D (Integer x, Integer y)
 	{
@@ -53,10 +54,10 @@ public class Game extends JFrame
 	}
 	
 	public Game (ArrayList<Integer> fieldSize, Integer mineCount)
-	{ this (fieldSize, mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWarp.NO); }
+	{ this (fieldSize, mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWrap.NO); }
 	
 	@SuppressWarnings("unchecked")
-	public Game (ArrayList <Integer> fieldSize, Integer mineCount, NeighboorhoodType neighborhoodType, Integer neighborhoodRadius, NeighboorhoodWarp neighborhoodWrap)
+	public Game (ArrayList <Integer> fieldSize, Integer mineCount, NeighboorhoodType neighborhoodType, Integer neighborhoodRadius, NeighboorhoodWrap neighborhoodWrap)
 	{
 		hints = true; firstClick = true;
 		
@@ -67,14 +68,16 @@ public class Game extends JFrame
         switch (neighborhoodType) {
             case SQUARE: this.neighborhoodType = Square.instance; break;
             case PLUS: this.neighborhoodType = Plus.instance; break;
+            case KNIGHT: this.neighborhoodType = Knight.instance; break;
             default:
-                this.neighborhoodType = null;
+                throw new RuntimeException ("Unimplemented neighborhood type");
         }
 
         switch (neighborhoodWrap) {
             case NO: this.neighborhoodWrap = Non.instance; break;
             case TORUS: this.neighborhoodWrap = Torus.instance; break;
-            default: this.neighborhoodWrap = null;
+            default:
+                throw new RuntimeException ("Unimplemented wrap type");
         }
 
 		flags = new HashSet <> ();
@@ -150,7 +153,7 @@ public class Game extends JFrame
             return new HashSet<>();
         }
         if (neighborhoodWrap != null) {
-            neighbors = neighborhoodWrap.applyWarp(neighbors, this);
+            neighbors = neighborhoodWrap.applyWrap(neighbors, this);
         }
 
         neighbors.remove(position);

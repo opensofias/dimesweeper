@@ -17,7 +17,7 @@ public class Launcher extends JFrame
 	private static final long serialVersionUID = 1L;
 
     private static final Map<String, Game.NeighboorhoodType> neighboorhoodTypeNames;
-    private static final Map<String, Game.NeighboorhoodWarp> neighboorhoodWarpNames;
+    private static final Map<String, Game.NeighboorhoodWrap> neighboorhoodWrapNames;
 	
 	private final JSplitPane pnAll;
 	
@@ -84,7 +84,7 @@ public class Launcher extends JFrame
 		pnOptions.add(spRadius = new JSpinner (new SpinnerNumberModel (1, 1, 9000, 1)));
 		
 		pnOptions.add(new JLabel ("wrapping:"));
-        strings = neighboorhoodWarpNames.keySet();
+        strings = neighboorhoodWrapNames.keySet();
 		pnOptions.add (cbWraps = new JComboBox<> (strings.toArray(new String[strings.size()])));
 
 		pnOptions.add(btRun = new JButton ("launch game"));
@@ -104,7 +104,7 @@ public class Launcher extends JFrame
 				(Integer) spMines.getValue (),
                 neighboorhoodTypeNames.get(cbNeigs.getSelectedItem ()),
 				(Integer) spRadius.getValue (),
-				neighboorhoodWarpNames.get(cbWraps.getSelectedItem())
+				neighboorhoodWrapNames.get(cbWraps.getSelectedItem())
                 );
 		}
 		catch (Exception e)
@@ -166,10 +166,10 @@ public class Launcher extends JFrame
         typeNames.put("knight", Game.NeighboorhoodType.KNIGHT);
         neighboorhoodTypeNames = Collections.unmodifiableMap(typeNames);
 
-        Map<String, Game.NeighboorhoodWarp> typeWarps = new HashMap<>();
-        typeWarps.put("no", Game.NeighboorhoodWarp.NO);
-        typeWarps.put("torus", Game.NeighboorhoodWarp.TORUS);
-        typeWarps.put("reflect (borken)", Game.NeighboorhoodWarp.REFLECT);
-        neighboorhoodWarpNames = Collections.unmodifiableMap(typeWarps);
+        Map<String, Game.NeighboorhoodWrap> typeWraps = new HashMap<>();
+        typeWraps.put("no", Game.NeighboorhoodWrap.NO);
+        typeWraps.put("torus", Game.NeighboorhoodWrap.TORUS);
+        typeWraps.put("reflect (borken)", Game.NeighboorhoodWrap.REFLECT);
+        neighboorhoodWrapNames = Collections.unmodifiableMap(typeWraps);
     }
 }

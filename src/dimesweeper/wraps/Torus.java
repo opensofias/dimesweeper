@@ -1,7 +1,7 @@
-package dimesweeper.warps;
+package dimesweeper.wraps;
 
 import dimesweeper.Game;
-import dimesweeper.IWarp;
+import dimesweeper.IWrap;
 import dimesweeper.Position;
 
 import java.util.ArrayList;
@@ -11,13 +11,13 @@ import java.util.Set;
 /**
  * Created by David on 24.05.2015.
  */
-public class Torus implements IWarp {
+public class Torus implements IWrap {
     public final static Torus instance = new Torus();
 
     private Torus () {}
 
     @Override
-    public Set<Position> applyWarp (Set<Position> positions, Game game) {
+    public Set<Position> applyWrap (Set<Position> positions, Game game) {
         Iterator<Position> positionIterator = positions.iterator();
         ArrayList<Integer> dimensionSizes = game.fieldSize;
 
