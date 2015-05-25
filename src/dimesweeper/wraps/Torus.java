@@ -2,9 +2,11 @@ package dimesweeper.wraps;
 
 import dimesweeper.Game;
 import dimesweeper.IWrap;
-import dimesweeper.Position;
+import dimesweeper.positions.Position;
+import dimesweeper.positions.PositionBuilder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -12,27 +14,30 @@ import java.util.Set;
  * Created by EDave on 24.05.2015.
  */
 public class Torus implements IWrap {
-    public final static Torus instance = new Torus();
+	public final static Torus instance = new Torus ();
 
-    private Torus () {}
+	private Torus () {
+	}
 
-    @Override
-    public Set<Position> applyWrap (Set<Position> positions, Game game) {
-        Iterator<Position> positionIterator = positions.iterator();
-        ArrayList<Integer> dimensionSizes = game.fieldSize;
+	@Override
+	public Set<Position> applyWrap (Set<Position> positions, Game game) {
+		Iterator<Position> positionIterator = positions.iterator ();
+		ArrayList<Integer> dimensionSizes = game.fieldSize;
+		Set<Position> newPositions = new HashSet<> ();
 
-        positions: while (positionIterator.hasNext()) {
-            Position pos = positionIterator.next();
-            for (int iCoord = 0; iCoord < pos.size(); iCoord++) {
-                int coord = pos.get(iCoord);
-                int max = dimensionSizes.get(iCoord);
+		for (Position pos : positions) {
+			PositionBuilder pb = new PositionBuilder (pos);
+			for (int iCoord = 0; iCoord < pb.size (); iCoord++) {
+				int coord = pb.get (iCoord);
+				int max = dimensionSizes.get (iCoord);
 
-                if (coord < 0 || coord >= max) {
-                    pos.set(iCoord, (coord + max) % max);
-                }
-            }
-        }
+				if (coord < 0 || coord >= max) {
+					pb.set (iCoord, (coord + max) % max);
+				}
+			}
+			newPositions.add (pb.export ());
+		}
 
-        return positions;
-    }
+		return newPositions;
+	}
 }

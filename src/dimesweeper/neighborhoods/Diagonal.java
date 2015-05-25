@@ -1,7 +1,7 @@
 package dimesweeper.neighborhoods;
 
 import dimesweeper.INeighborhood;
-import dimesweeper.Position;
+import dimesweeper.positions.Position;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,48 +10,34 @@ import java.util.Set;
  * Created by EDave on 24.05.2015.
  */
 public class Diagonal implements INeighborhood {
-    public final static Diagonal instance = new Diagonal();
+	public final static Diagonal instance = new Diagonal ();
 
-    private Diagonal () {
-    }
+	private Diagonal () {
+	}
 
-    @Override
-    public Set<Position> getNeighborPositions (Position pos, int radius) {
-        Set<Position> ret = new HashSet<>();
-        Position newPos;
+	@Override
+	public Set<Position> getNeighborPositions (Position pos, int radius) {
+		Set<Position> positions = new HashSet<> ();
+		for (; radius >= 1; radius--)
+			positions.addAll (getNeighbors (pos, radius));
+		return positions;
+	}
 
-        for (int i = 1; i <= radius; i++) {
-            Set<Position> radiusPositions = new HashSet<>();
+	public Set<Position> getNeighbors (Position pos, int radius) {
+		Set<Position> ret = new HashSet<> ();
+		if (pos.getLength () <= 1) {
+			int coord = pos.getHead ();
+			ret.add (Position.create (coord + radius));
+			ret.add (Position.create (coord - radius));
+		} else {
+			int coord = pos.getHead ();
+			Position tailCoords = pos.getTail ();
+			for (Position subposition : getNeighbors (tailCoords, radius)) {
+				ret.add (subposition.prepend (coord + radius));
+				ret.add (subposition.prepend (coord - radius));
+			}
+		}
+		return ret;
+	}
 
-            for (int dim = 0; dim < pos.size(); dim++) {
-                int coord = pos.get(dim);
-                if (dim == 0) {
-                    newPos = new Position();
-                    newPos.add(coord + i);
-                    radiusPositions.add(newPos);
-
-                    newPos = new Position();
-                    newPos.add(coord - i);
-                    radiusPositions.add(newPos);
-                } else {
-                    Set<Position> oldPositions = radiusPositions;
-                    radiusPositions = new HashSet<>();
-
-                    for (Position oldPosition : oldPositions) {
-                        newPos = (Position) oldPosition.clone();
-                        newPos.add(coord + i);
-                        radiusPositions.add(newPos);
-
-                        newPos = (Position) oldPosition.clone();
-                        newPos.add(coord - i);
-                        radiusPositions.add(newPos);
-                    }
-                }
-            }
-
-            ret.addAll(radiusPositions);
-        }
-
-        return ret;
-    }
 }
