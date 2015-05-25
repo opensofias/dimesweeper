@@ -7,7 +7,8 @@ import dimesweeper.neighborhoods.Diagonal;
 import dimesweeper.neighborhoods.Plus;
 import dimesweeper.neighborhoods.Square;
 import dimesweeper.wraps.Non;
-import dimesweeper.wraps.Reflect;
+import dimesweeper.wraps.ReflectCell;
+import dimesweeper.wraps.ReflectEdge;
 import dimesweeper.wraps.Torus;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ import java.util.*;
 public class Game extends JFrame
 {
     public enum NeighboorhoodType { SQUARE, PLUS, DIAGONAL }
-    public enum NeighboorhoodWrap { NO, TORUS, REFLECT }
+    public enum NeighboorhoodWrap { NO, TORUS, REFLECT_EDGE, REFLECT_CELL }
 
 	private static final long serialVersionUID = 1L;
 	
@@ -77,7 +78,8 @@ public class Game extends JFrame
         switch (neighborhoodWrap) {
             case NO: this.neighborhoodWrap = Non.instance; break;
             case TORUS: this.neighborhoodWrap = Torus.instance; break;
-			case REFLECT: this.neighborhoodWrap = Reflect.instance; break;
+			case REFLECT_EDGE: this.neighborhoodWrap = ReflectEdge.instance; break;
+			case REFLECT_CELL: this.neighborhoodWrap = ReflectCell.instance; break;
             default:
                 throw new RuntimeException ("Unimplemented wrap type");
         }
@@ -158,7 +160,9 @@ public class Game extends JFrame
             neighbors = neighborhoodWrap.applyWrap(neighbors, this);
         }
 
-        neighbors.remove(position);
+        neighbors.removeIf(neighbor ->
+			neighbor.equals(position)
+		);
 
         return neighbors;
     }

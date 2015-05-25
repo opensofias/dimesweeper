@@ -169,7 +169,8 @@ public class Launcher extends JFrame
         Map<String, Game.NeighboorhoodWrap> typeWraps = new HashMap<>();
         typeWraps.put("no", Game.NeighboorhoodWrap.NO);
         typeWraps.put("torus", Game.NeighboorhoodWrap.TORUS);
-        typeWraps.put("reflect (borken)", Game.NeighboorhoodWrap.REFLECT);
+        typeWraps.put("reflective edge cell", Game.NeighboorhoodWrap.REFLECT_CELL);
+		typeWraps.put("reflective edge", Game.NeighboorhoodWrap.REFLECT_EDGE);
         neighboorhoodWrapNames = Collections.unmodifiableMap(typeWraps);
     }
 }

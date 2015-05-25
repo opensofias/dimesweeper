@@ -11,10 +11,10 @@ import java.util.Set;
 /**
  * Created by EDave on 24.05.2015.
  */
-public class Reflect implements IWrap {
-    public final static Reflect instance = new Reflect();
+public class ReflectEdge implements IWrap {
+    public final static ReflectEdge instance = new ReflectEdge();
 
-    private Reflect () {}
+    private ReflectEdge () {}
 
     @Override
     public Set<Position> applyWrap (Set<Position> positions, Game game) {
@@ -38,9 +38,9 @@ public class Reflect implements IWrap {
 
     public int reflect (int coord, int max) {
         if ((coord / max) % 2 == 1) {
-            return max - (coord % max) - 2;
+            return max - (coord % max) - 1;
         } else {
-            return Math.abs(coord % max);
+            return Math.abs(coord % max) - 1;
         }
     }
 }
