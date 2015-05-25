@@ -151,18 +151,18 @@ public class Launcher extends JFrame {
 		}
 	}
 
-	static {
-		Map<String, Game.NeighboorhoodType> typeNames = new HashMap<> ();
-		typeNames.put ("square", Game.NeighboorhoodType.SQUARE);
-		typeNames.put ("plus", Game.NeighboorhoodType.PLUS);
-		typeNames.put ("diagonal", Game.NeighboorhoodType.DIAGONAL);
-		neighboorhoodTypeNames = Collections.unmodifiableMap (typeNames);
+    static {
+        Map<String, Game.NeighboorhoodType> typeNames = new HashMap<>();
+        typeNames.put("square", Game.NeighboorhoodType.SQUARE);
+        typeNames.put("orthogonal", Game.NeighboorhoodType.ORTHOGONAL);
+        typeNames.put("diagonal", Game.NeighboorhoodType.DIAGONAL);
+        neighboorhoodTypeNames = Collections.unmodifiableMap(typeNames);
 
-		Map<String, Game.NeighboorhoodWrap> typeWraps = new HashMap<> ();
-		typeWraps.put ("no", Game.NeighboorhoodWrap.NO);
-		typeWraps.put ("torus", Game.NeighboorhoodWrap.TORUS);
-		typeWraps.put ("reflective edge cell", Game.NeighboorhoodWrap.REFLECT_CELL);
-		typeWraps.put ("reflective edge", Game.NeighboorhoodWrap.REFLECT_EDGE);
-		neighboorhoodWrapNames = Collections.unmodifiableMap (typeWraps);
-	}
+        Map<String, Game.NeighboorhoodWrap> typeWraps = new HashMap<>();
+        typeWraps.put("no", Game.NeighboorhoodWrap.NO);
+        typeWraps.put("torus", Game.NeighboorhoodWrap.TORUS);
+        typeWraps.put("reflective edge cell", Game.NeighboorhoodWrap.REFLECT_CELL);
+		typeWraps.put("reflective edge", Game.NeighboorhoodWrap.REFLECT_EDGE);
+        neighboorhoodWrapNames = Collections.unmodifiableMap(typeWraps);
+    }
 }

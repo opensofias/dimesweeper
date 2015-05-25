@@ -4,7 +4,7 @@
 package dimesweeper;
 
 import dimesweeper.neighborhoods.Diagonal;
-import dimesweeper.neighborhoods.Plus;
+import dimesweeper.neighborhoods.Orthogonal;
 import dimesweeper.neighborhoods.Square;
 import dimesweeper.positions.Position;
 import dimesweeper.wraps.Non;
@@ -21,10 +21,10 @@ import java.util.Set;
 /**
  * @author S.Bachmann
  */
-public class Game extends JFrame {
-	public enum NeighboorhoodType {SQUARE, PLUS, DIAGONAL}
-
-	public enum NeighboorhoodWrap {NO, TORUS, REFLECT_EDGE, REFLECT_CELL}
+public class Game extends JFrame
+{
+    public enum NeighboorhoodType { SQUARE, ORTHOGONAL, DIAGONAL }
+    public enum NeighboorhoodWrap { NO, TORUS, REFLECT_EDGE, REFLECT_CELL }
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,42 +68,28 @@ public class Game extends JFrame {
 		firstClick = true;
 
 		this.fieldSize = fieldSize;
-		this.mineCount = mineCount;
-		this.neighborhoodRadius = neighborhoodRadius;
+        this.mineCount = mineCount;
+        this.neighborhoodRadius = neighborhoodRadius;
 
-		switch (neighborhoodType) {
-			case SQUARE:
-				this.neighborhoodType = Square.instance;
-				break;
-			case PLUS:
-				this.neighborhoodType = Plus.instance;
-				break;
-			case DIAGONAL:
-				this.neighborhoodType = Diagonal.instance;
-				break;
-			default:
-				throw new RuntimeException ("Unimplemented neighborhood type");
-		}
+        switch (neighborhoodType) {
+            case SQUARE: this.neighborhoodType = Square.instance; break;
+            case ORTHOGONAL: this.neighborhoodType = Orthogonal.instance; break;
+            case DIAGONAL: this.neighborhoodType = Diagonal.instance; break;
+            default:
+                throw new RuntimeException ("Unimplemented neighborhood type");
+        }
 
-		switch (neighborhoodWrap) {
-			case NO:
-				this.neighborhoodWrap = Non.instance;
-				break;
-			case TORUS:
-				this.neighborhoodWrap = Torus.instance;
-				break;
-			case REFLECT_EDGE:
-				this.neighborhoodWrap = ReflectEdge.instance;
-				break;
-			case REFLECT_CELL:
-				this.neighborhoodWrap = ReflectCell.instance;
-				break;
-			default:
-				throw new RuntimeException ("Unimplemented wrap type");
-		}
+        switch (neighborhoodWrap) {
+            case NO: this.neighborhoodWrap = Non.instance; break;
+            case TORUS: this.neighborhoodWrap = Torus.instance; break;
+			case REFLECT_EDGE: this.neighborhoodWrap = ReflectEdge.instance; break;
+			case REFLECT_CELL: this.neighborhoodWrap = ReflectCell.instance; break;
+            default:
+                throw new RuntimeException ("Unimplemented wrap type");
+        }
 
-		flags = new HashSet<> ();
-
+		flags = new HashSet <> ();
+		
 		field = new FieldRow (fieldSize, Position.NIL, this);
 
 		boxletCount = countBoxlets (this.fieldSize);
