@@ -2,7 +2,6 @@ package dimesweeper.neighborhoods;
 
 import dimesweeper.INeighborhood;
 import dimesweeper.positions.Position;
-import dimesweeper.positions.PositionBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,9 +22,7 @@ public class Square implements INeighborhood {
 
 		if (pos.getLength () <= 1) { /* base case */
 			for (int i = -radius; i <= radius; i++) {
-				PositionBuilder newPos = new PositionBuilder ();
-				newPos.add (currentCoordinate + i);
-				ret.add (newPos.export ());
+				ret.add (Position.create (currentCoordinate + 1));
 			}
 		} else {
 			Set<Position> subpositions = getNeighborPositions (pos.getTail (), radius); // we took out the head from pos when we got currentCoordinate
@@ -35,6 +32,7 @@ public class Square implements INeighborhood {
 				}
 			}
 		}
+
 		return ret;
 	}
 }

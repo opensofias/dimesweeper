@@ -6,6 +6,10 @@ import java.util.Objects;
  * Created by EDave on 25.05.2015.
  */
 public abstract class Position {
+	public static Position create (int i) {
+		return new PositionImpl (i, Position.NIL);
+	}
+
 	public abstract int getHead ();
 
 	public abstract Position getTail ();
@@ -59,7 +63,7 @@ public abstract class Position {
 		}
 	};
 
-	private class PositionImpl extends Position {
+	private static class PositionImpl extends Position {
 		private final int head;
 		private final Position tail;
 		private final int lenght;
