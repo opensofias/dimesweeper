@@ -2,7 +2,6 @@ package dimesweeper.neighborhoods;
 
 import dimesweeper.INeighborhood;
 import dimesweeper.positions.Position;
-import dimesweeper.positions.PositionBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,44 +17,27 @@ public class Diagonal implements INeighborhood {
 
 	@Override
 	public Set<Position> getNeighborPositions (Position pos, int radius) {
+		Set<Position> positions = new HashSet<> ();
+		for (; radius >= 1; radius--)
+			positions.addAll (getNeighbors (pos, radius));
+		return positions;
+	}
+
+	public Set<Position> getNeighbors (Position pos, int radius) {
 		Set<Position> ret = new HashSet<> ();
-		PositionBuilder pb = new PositionBuilder (pos);
-		PositionBuilder newPos;
-
-		for (int i = 1; i <= radius; i++) {
-			Set<PositionBuilder> radiusPositions = new HashSet<> ();
-
-			for (int dim = 0; dim < pos.getLength (); dim++) {
-				int coord = pb.get (dim);
-				if (dim == 0) {
-					newPos = new PositionBuilder ();
-					newPos.add (coord + i);
-					radiusPositions.add (newPos);
-
-					newPos = new PositionBuilder ();
-					newPos.add (coord - i);
-					radiusPositions.add (newPos);
-				} else {
-					Set<PositionBuilder> oldPositions = radiusPositions;
-					radiusPositions = new HashSet<> ();
-
-					for (PositionBuilder oldPosition : oldPositions) {
-						newPos = (PositionBuilder) oldPosition.clone ();
-						newPos.add (coord + i);
-						radiusPositions.add (newPos);
-
-						newPos = (PositionBuilder) oldPosition.clone ();
-						newPos.add (coord - i);
-						radiusPositions.add (newPos);
-					}
-				}
-			}
-
-			for (PositionBuilder radiusPosition : radiusPositions) {
-				ret.add (radiusPosition.export ());
+		if (pos.getLength () <= 1) {
+			int coord = pos.getHead ();
+			ret.add (Position.create (coord + radius));
+			ret.add (Position.create (coord - radius));
+		} else {
+			int coord = pos.getHead ();
+			Position tailCoords = pos.getTail ();
+			for (Position subposition : getNeighbors (tailCoords, radius)) {
+				ret.add (subposition.prepend (coord + radius));
+				ret.add (subposition.prepend (coord - radius));
 			}
 		}
-
 		return ret;
 	}
+
 }
