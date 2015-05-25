@@ -9,10 +9,10 @@ import java.util.Set;
 /**
  * Created by EDave on 24.05.2015.
  */
-public class Plus implements INeighborhood {
-    public final static Plus instance = new Plus();
+public class Orthogonal implements INeighborhood {
+    public final static Orthogonal instance = new Orthogonal();
 
-    private Plus () {}
+    private Orthogonal () {}
 
     @Override
     public Set<Position> getNeighborPositions (Position pos, int radius) {

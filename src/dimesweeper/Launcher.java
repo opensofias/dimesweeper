@@ -162,7 +162,7 @@ public class Launcher extends JFrame
     static {
         Map<String, Game.NeighboorhoodType> typeNames = new HashMap<>();
         typeNames.put("square", Game.NeighboorhoodType.SQUARE);
-        typeNames.put("plus", Game.NeighboorhoodType.PLUS);
+        typeNames.put("orthogonal", Game.NeighboorhoodType.ORTHOGONAL);
         typeNames.put("diagonal", Game.NeighboorhoodType.DIAGONAL);
         neighboorhoodTypeNames = Collections.unmodifiableMap(typeNames);
 

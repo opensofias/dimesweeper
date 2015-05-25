@@ -4,7 +4,7 @@
 package dimesweeper;
 
 import dimesweeper.neighborhoods.Diagonal;
-import dimesweeper.neighborhoods.Plus;
+import dimesweeper.neighborhoods.Orthogonal;
 import dimesweeper.neighborhoods.Square;
 import dimesweeper.wraps.Non;
 import dimesweeper.wraps.ReflectCell;
@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class Game extends JFrame
 {
-    public enum NeighboorhoodType { SQUARE, PLUS, DIAGONAL }
+    public enum NeighboorhoodType { SQUARE, ORTHOGONAL, DIAGONAL }
     public enum NeighboorhoodWrap { NO, TORUS, REFLECT_EDGE, REFLECT_CELL }
 
 	private static final long serialVersionUID = 1L;
@@ -69,7 +69,7 @@ public class Game extends JFrame
 
         switch (neighborhoodType) {
             case SQUARE: this.neighborhoodType = Square.instance; break;
-            case PLUS: this.neighborhoodType = Plus.instance; break;
+            case ORTHOGONAL: this.neighborhoodType = Orthogonal.instance; break;
             case DIAGONAL: this.neighborhoodType = Diagonal.instance; break;
             default:
                 throw new RuntimeException ("Unimplemented neighborhood type");
