@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  * @author S.Bachmann
@@ -16,21 +16,27 @@ public class Boxlet extends JToggleButton implements MouseListener
 {
 	private static final long serialVersionUID = 1L;
 	
-	public LinkedList <Integer> position;
+	public Position position;
 	public final Game game;
+
+    private java.util.List<Boxlet> neighbors;
 	
-	private Neighborhood neighbors = null;
-	
-	public Boxlet (LinkedList <Integer> position, Game game)
+	public Boxlet (Position position, Game game)
 	{
 		this.game = game;
 		this.position = position;
+        setMinimumSize(new Dimension(64, 64));
 		addMouseListener (this);
 	}
 	
-	public Neighborhood getNeighbors ()
+	public java.util.List<Boxlet> getNeighbors ()
 	{
-		if (neighbors == null) neighbors = new Neighborhood(this);
+		if (neighbors == null) {
+            neighbors = new ArrayList<>();
+            for (Position neighborPos : game.findNeighbors(position)) {
+                neighbors.add(game.getBoxlet(neighborPos));
+            }
+        }
 		return neighbors;
 	}
 	
@@ -41,9 +47,9 @@ public class Boxlet extends JToggleButton implements MouseListener
 		return counter;
 	}
 	
-	public boolean getMine () { return game.mines.contains (position); }
+	public boolean getMine () { return game.mines.contains(position); }
 	
-	public boolean getFlag () { return game.flags.contains (position); }
+	public boolean getFlag () { return game.flags.contains(position); }
 	
 	public void setFlag (boolean f)
 	{
@@ -74,9 +80,9 @@ public class Boxlet extends JToggleButton implements MouseListener
 
 	@Override public void mouseClicked (MouseEvent e)
 	{
-		switch (e.getButton ())
+		switch (e.getButton())
 		{
-			case 1: 
+			case 1:
 				if (game.firstClick) game.firstClick(position);
 				if (getFlag ()) setFlag (false);
 				else if (isEnabled ()) reveal();

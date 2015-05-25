@@ -3,13 +3,14 @@
  */
 package dimesweeper;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
  * @author S.Bachmann
  */
-public class MineSet extends HashSet <LinkedList <Integer>>
+public class MineSet extends HashSet <Position>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -20,13 +21,13 @@ public class MineSet extends HashSet <LinkedList <Integer>>
 	 * @param firstMove
 	 */
 	
-	public MineSet (Integer mineCount, LinkedList<Integer> fieldSize, LinkedList<Integer> firstMove)
+	public MineSet (Integer mineCount, ArrayList<Integer> fieldSize, Position firstMove)
 	{
 		add (firstMove);
 		
 		while ( size () <= mineCount )
 		{
-			LinkedList <Integer> mine = new LinkedList <> (); 
+			Position mine = new Position();
 			
 			fieldSize.stream().forEach ((Integer dimension) ->
                     mine.add ((int) (dimension * Math.random())));
@@ -46,7 +47,7 @@ public class MineSet extends HashSet <LinkedList <Integer>>
 	{
 		while ( size () < mineCount )
 		{
-			LinkedList <Integer> mine = new LinkedList <> (); 
+            Position mine = new Position ();
 			
 			fieldsize.stream().forEach ((dimension) ->
                     mine.add ((int) (dimension * Math.random())));

@@ -3,18 +3,25 @@
  */
 package dimesweeper;
 
+import dimesweeper.neighborhoods.Diagonal;
+import dimesweeper.neighborhoods.Plus;
+import dimesweeper.neighborhoods.Square;
+import dimesweeper.wraps.Non;
+import dimesweeper.wraps.ReflectCell;
+import dimesweeper.wraps.ReflectEdge;
+import dimesweeper.wraps.Torus;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * @author S.Bachmann
  */
 public class Game extends JFrame
 {
-    public enum NeighboorhoodType { SQUARE, PLUS, KNIGHT }
-    public enum NeighboorhoodWarp { NO, TORUS, REFLECT }
+    public enum NeighboorhoodType { SQUARE, PLUS, DIAGONAL }
+    public enum NeighboorhoodWrap { NO, TORUS, REFLECT_EDGE, REFLECT_CELL }
 
 	private static final long serialVersionUID = 1L;
 	
@@ -27,43 +34,59 @@ public class Game extends JFrame
 	public Integer revealedCount = 0;
 	private Integer boxletCount = 1;
 	
-	public final NeighboorhoodType neighborhoodType;
+	public final INeighborhood neighborhoodType;
 	public final Integer neighborhoodRadius;
-    public final NeighboorhoodWarp neighborhoodWrap;
+    public final IWrap neighborhoodWrap;
 	
-	public final LinkedList <Integer> fieldSize;
+	public final ArrayList<Integer> fieldSize;
 	
 	public final FieldRow field;
 	
 	public boolean firstClick, hints;
 	
 	public Game (Integer fieldX, Integer fieldY , Integer mineCount)
-	{ this (construct2D (fieldX, fieldY), mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWarp.NO); }
+	{ this (construct2D (fieldX, fieldY), mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWrap.NO); }
 	
-	private static LinkedList <Integer> construct2D (Integer x, Integer y)
+	private static ArrayList<Integer> construct2D (Integer x, Integer y)
 	{
-		LinkedList <Integer> result = new LinkedList <> ();
-		result.add (x); result.add (y);
+        ArrayList <Integer> result = new ArrayList <> ();
+		result.add (x);
+        result.add (y);
 		return result;
 	}
 	
-	public Game (LinkedList <Integer> fieldSize, Integer mineCount)
-	{ this (fieldSize, mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWarp.NO); }
+	public Game (ArrayList<Integer> fieldSize, Integer mineCount)
+	{ this (fieldSize, mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWrap.NO); }
 	
 	@SuppressWarnings("unchecked")
-	public Game (LinkedList <Integer> fieldSize, Integer mineCount, NeighboorhoodType neighborhoodType, Integer neighborhoodRadius, NeighboorhoodWarp neighborhoodWrap)
+	public Game (ArrayList <Integer> fieldSize, Integer mineCount, NeighboorhoodType neighborhoodType, Integer neighborhoodRadius, NeighboorhoodWrap neighborhoodWrap)
 	{
 		hints = true; firstClick = true;
 		
 		this.fieldSize = fieldSize;
         this.mineCount = mineCount;
-		this.neighborhoodType = neighborhoodType;
         this.neighborhoodRadius = neighborhoodRadius;
-		this.neighborhoodWrap = neighborhoodWrap;
-		
+
+        switch (neighborhoodType) {
+            case SQUARE: this.neighborhoodType = Square.instance; break;
+            case PLUS: this.neighborhoodType = Plus.instance; break;
+            case DIAGONAL: this.neighborhoodType = Diagonal.instance; break;
+            default:
+                throw new RuntimeException ("Unimplemented neighborhood type");
+        }
+
+        switch (neighborhoodWrap) {
+            case NO: this.neighborhoodWrap = Non.instance; break;
+            case TORUS: this.neighborhoodWrap = Torus.instance; break;
+			case REFLECT_EDGE: this.neighborhoodWrap = ReflectEdge.instance; break;
+			case REFLECT_CELL: this.neighborhoodWrap = ReflectCell.instance; break;
+            default:
+                throw new RuntimeException ("Unimplemented wrap type");
+        }
+
 		flags = new HashSet <> ();
 		
-		field = new FieldRow (fieldSize, new LinkedList <> (), this);
+		field = new FieldRow (fieldSize, new Position(), this);
 
 		boxletCount = countBoxlets (this.fieldSize);
 		
@@ -75,7 +98,7 @@ public class Game extends JFrame
 		checkWon ();
 	}
 
-	public static Integer countBoxlets (LinkedList <Integer> f)
+	public static Integer countBoxlets (ArrayList <Integer> f)
 	{
 		Integer result = 1;
 		for (Integer n : f)
@@ -83,7 +106,7 @@ public class Game extends JFrame
 		return result;
 	}
 	
-	public final void firstClick (LinkedList <Integer> click)
+	public final void firstClick (Position click)
 	{
 		mines = new MineSet(mineCount, fieldSize, click);
 		this.firstClick = false;
@@ -92,7 +115,7 @@ public class Game extends JFrame
 	public Integer flagsLeft ()
 	{ return mineCount - flagCount; }
 	
-	public Boxlet getBoxlet (LinkedList <Integer> coordinates)
+	public Boxlet getBoxlet (Deque<Integer> coordinates)
 	{ return field.getBoxlet (coordinates); }
 
 	public final void end ()
@@ -124,4 +147,23 @@ public class Game extends JFrame
 		end ();
 		JOptionPane.showMessageDialog(this, "you won." + (mineCount == 0 ? "\nfor sure." : ""), "congraz", JOptionPane.INFORMATION_MESSAGE);
 	}
+
+    public final Set<Position> findNeighbors(Position position)
+    {
+        Set<Position> neighbors;
+        if (neighborhoodType != null) {
+            neighbors = neighborhoodType.getNeighborPositions((Position) position.clone(), neighborhoodRadius);
+        } else {
+            return new HashSet<>();
+        }
+        if (neighborhoodWrap != null) {
+            neighbors = neighborhoodWrap.applyWrap(neighbors, this);
+        }
+
+        neighbors.removeIf(neighbor ->
+			neighbor.equals(position)
+		);
+
+        return neighbors;
+    }
 }
