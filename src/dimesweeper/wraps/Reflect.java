@@ -11,10 +11,10 @@ import java.util.Set;
 /**
  * Created by EDave on 24.05.2015.
  */
-public class Non implements IWrap {
-    public final static Non instance = new Non();
+public class Reflect implements IWrap {
+    public final static Reflect instance = new Reflect();
 
-    private Non () {}
+    private Reflect () {}
 
     @Override
     public Set<Position> applyWrap (Set<Position> positions, Game game) {
@@ -28,12 +28,19 @@ public class Non implements IWrap {
                 int max = dimensionSizes.get(iCoord);
 
                 if (coord < 0 || coord >= max) {
-                    positionIterator.remove();
-                    continue positions;
+                    pos.set(iCoord, reflect(coord, max));
                 }
             }
         }
 
         return positions;
+    }
+
+    public int reflect (int coord, int max) {
+        if ((coord / max) % 2 == 1) {
+            return max - (coord % max) - 2;
+        } else {
+            return Math.abs(coord % max);
+        }
     }
 }

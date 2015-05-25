@@ -3,7 +3,7 @@ package dimesweeper;
 import java.util.LinkedList;
 
 /**
- * Created by David on 24.05.2015.
+ * Created by EDave on 24.05.2015.
  */
 public class Position extends LinkedList<Integer> {
     public boolean equals (Object o) {

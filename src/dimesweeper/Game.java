@@ -3,10 +3,11 @@
  */
 package dimesweeper;
 
-import dimesweeper.neighborhoods.Knight;
+import dimesweeper.neighborhoods.Diagonal;
 import dimesweeper.neighborhoods.Plus;
 import dimesweeper.neighborhoods.Square;
 import dimesweeper.wraps.Non;
+import dimesweeper.wraps.Reflect;
 import dimesweeper.wraps.Torus;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ import java.util.*;
  */
 public class Game extends JFrame
 {
-    public enum NeighboorhoodType { SQUARE, PLUS, KNIGHT }
+    public enum NeighboorhoodType { SQUARE, PLUS, DIAGONAL }
     public enum NeighboorhoodWrap { NO, TORUS, REFLECT }
 
 	private static final long serialVersionUID = 1L;
@@ -68,7 +69,7 @@ public class Game extends JFrame
         switch (neighborhoodType) {
             case SQUARE: this.neighborhoodType = Square.instance; break;
             case PLUS: this.neighborhoodType = Plus.instance; break;
-            case KNIGHT: this.neighborhoodType = Knight.instance; break;
+            case DIAGONAL: this.neighborhoodType = Diagonal.instance; break;
             default:
                 throw new RuntimeException ("Unimplemented neighborhood type");
         }
@@ -76,6 +77,7 @@ public class Game extends JFrame
         switch (neighborhoodWrap) {
             case NO: this.neighborhoodWrap = Non.instance; break;
             case TORUS: this.neighborhoodWrap = Torus.instance; break;
+			case REFLECT: this.neighborhoodWrap = Reflect.instance; break;
             default:
                 throw new RuntimeException ("Unimplemented wrap type");
         }

@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Created by David on 24.05.2015.
+ * Created by EDave on 24.05.2015.
  */
 public class Torus implements IWrap {
     public final static Torus instance = new Torus();
