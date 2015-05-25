@@ -2,7 +2,6 @@ package dimesweeper.neighborhoods;
 
 import dimesweeper.INeighborhood;
 import dimesweeper.positions.Position;
-import dimesweeper.positions.PositionBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,15 +18,20 @@ public class Plus implements INeighborhood {
 	@Override
 	public Set<Position> getNeighborPositions (Position pos, int radius) {
 		Set<Position> ret = new HashSet<> ();
+		int currentCoord = pos.getHead ();
+		Position subcoordinates = pos.getTail ();
 
-		for (int dim = 0; dim < pos.getLength (); dim++) {
-			for (int delta = -radius; delta <= radius; delta++) {
-				if (delta == 0) continue;
-				PositionBuilder newPos = new PositionBuilder (pos);
-				newPos.set (dim, newPos.get (dim) + delta);
-				ret.add (newPos.export ());
+		for (int delta = -radius; delta <= radius; delta++) {
+			if (delta == 0) continue;
+			ret.add (subcoordinates.prepend (currentCoord + delta));
+		}
+
+		if (!subcoordinates.isEmpty ()) {
+			for (Position subposition : getNeighborPositions (subcoordinates, radius)) {
+				ret.add (subposition.prepend (currentCoord));
 			}
 		}
+
 		return ret;
 	}
 }
