@@ -22,7 +22,7 @@ public class Square implements INeighborhood {
 
 		if (pos.getLength () <= 1) { /* base case */
 			for (int i = -radius; i <= radius; i++) {
-				ret.add (Position.create (currentCoordinate + 1));
+				ret.add (Position.create (currentCoordinate + i));
 			}
 		} else {
 			for (Position subposition : getNeighborPositions (pos.getTail (), radius)) {
