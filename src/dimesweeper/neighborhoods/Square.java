@@ -25,8 +25,7 @@ public class Square implements INeighborhood {
 				ret.add (Position.create (currentCoordinate + 1));
 			}
 		} else {
-			Set<Position> subpositions = getNeighborPositions (pos.getTail (), radius); // we took out the head from pos when we got currentCoordinate
-			for (Position subposition : subpositions) {
+			for (Position subposition : getNeighborPositions (pos.getTail (), radius)) {
 				for (int i = -radius; i <= radius; i++) {
 					ret.add (subposition.prepend (currentCoordinate + i));
 				}
