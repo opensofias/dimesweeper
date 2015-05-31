@@ -104,11 +104,21 @@ public class Boxlet extends JToggleButton implements MouseListener {
 
 	@Override
 	public void mouseEntered (MouseEvent e) {
-		if (game.hints) for (Boxlet n : getNeighbors ()) n.setBackground (Color.yellow);
+		if (game.hints) for (Boxlet n : getNeighbors ()) {
+			n.setBackground (Color.yellow);
+			RepaintManager.currentManager(n).markCompletelyClean(n); /* Forces swing not to repaint this boxlet */
+		}
+
+		game.repaint (); /* repaint all at once */
 	}
 
 	@Override
 	public void mouseExited (MouseEvent e) {
-		for (Boxlet n : getNeighbors ()) if (n.getBackground () == Color.yellow) n.setBackground (null);
+		for (Boxlet n : getNeighbors ()) {
+			if (n.getBackground () == Color.yellow) n.setBackground (null);
+			RepaintManager.currentManager(n).markCompletelyClean(n); /* Forces swing not to repaint this boxlet */
+		}
+
+		game.repaint (); /* repaint all at once */
 	}
 }

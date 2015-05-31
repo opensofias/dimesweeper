@@ -66,12 +66,12 @@ public abstract class Position {
 	private static class PositionImpl extends Position {
 		private final int head;
 		private final Position tail;
-		private final int lenght;
+		private final int length;
 
 		public PositionImpl (int head, Position tail) {
 			this.head = head;
 			this.tail = tail;
-			this.lenght = tail.getLength () + 1;
+			this.length = tail.getLength () + 1;
 		}
 
 		@Override
@@ -91,7 +91,7 @@ public abstract class Position {
 
 		@Override
 		public int getLength () {
-			return lenght;
+			return length;
 		}
 
 		@Override
