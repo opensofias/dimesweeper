@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author S.Bachmann
+ * @author sofias.
  */
 public class Game extends JFrame
 {

@@ -12,7 +12,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
- * @author S.Bachmann
+ * @author sofias.
  */
 public class Boxlet extends JToggleButton implements MouseListener {
 	private static final long serialVersionUID = 1L;
