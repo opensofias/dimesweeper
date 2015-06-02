@@ -15,19 +15,15 @@ public class Square implements INeighborhood {
 	private Square () {}
 
 	@Override
-	public Set<Position> getNeighborPositions (Position pos, int radius) {
-		
+	public Set<Position> getNeighborPositions (Position pos, int radius)
+	{
 		Set<Position> ret = new HashSet<> ();
 
-		if (pos.isEmpty ()) { ret.add (Position.NIL); }
+		if (pos.isEmpty ()) ret.add (Position.NIL);
 		else
-		{
-			for (Position subposition : getNeighborPositions (pos.getTail (), radius)) {
-				for (int i = -radius; i <= radius; i++) {
+			for (Position subposition : getNeighborPositions (pos.getTail (), radius))
+				for (int i = -radius; i <= radius; i++)
 					ret.add (subposition.prepend (pos.getHead () + i));
-				}
-			}
-		}
 
 		return ret;
 	}
