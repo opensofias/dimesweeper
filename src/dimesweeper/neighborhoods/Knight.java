@@ -14,21 +14,13 @@ import java.util.Set;
  *
  * @author sofias
  */
-public class Knight implements INeighborhood
+public class Knight extends Leap implements INeighborhood
 {
 	public final static Knight instance = new Knight ();
-	
-	private final LinkedList <Integer> leapList = new LinkedList<> ();
-	private final Leap leap; // i tried to make it inherit from Leap, but that didn't seem to work
 
-	public Knight ()
-	{
-		leapList.add (1); leapList.add (2);
-		leap = new Leap (leapList);
+	public Knight () {
+		super();
+		pattern.add(1);
+		pattern.add(2);
 	}
-
-	@Override
-	public Set<Position> getNeighborPositions (Position pos, int radius)
-	{ return leap.getNeighborPositions (pos, radius); }
-
 }
