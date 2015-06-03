@@ -3,6 +3,7 @@
  */
 package dimesweeper;
 
+import dimesweeper.Game.NeighboorhoodType;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 
 /**
- * @author S.Bachmann
+ * @author sofias.
  */
 public class Launcher extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -156,13 +157,14 @@ public class Launcher extends JFrame {
         typeNames.put("square", Game.NeighboorhoodType.SQUARE);
         typeNames.put("orthogonal", Game.NeighboorhoodType.ORTHOGONAL);
         typeNames.put("diagonal", Game.NeighboorhoodType.DIAGONAL);
+		typeNames.put ("knight", NeighboorhoodType.KNIGHT);
         neighboorhoodTypeNames = Collections.unmodifiableMap(typeNames);
 
         Map<String, Game.NeighboorhoodWrap> typeWraps = new HashMap<>();
         typeWraps.put("no", Game.NeighboorhoodWrap.NO);
         typeWraps.put("torus", Game.NeighboorhoodWrap.TORUS);
-        typeWraps.put("reflective edge cell", Game.NeighboorhoodWrap.REFLECT_CELL);
-		typeWraps.put("reflective edge", Game.NeighboorhoodWrap.REFLECT_EDGE);
+        typeWraps.put("reflect on cell", Game.NeighboorhoodWrap.REFLECT_CELL);
+		typeWraps.put("reflect on edge", Game.NeighboorhoodWrap.REFLECT_EDGE);
         neighboorhoodWrapNames = Collections.unmodifiableMap(typeWraps);
     }
 }

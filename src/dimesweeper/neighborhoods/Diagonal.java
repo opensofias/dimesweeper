@@ -9,6 +9,9 @@ import java.util.Set;
 /**
  * Created by EDave on 24.05.2015.
  */
+
+//TODO: rename. vertigonal? maxigonal?
+//TODO: make diagonal, triagonal, quadragonal proper
 public class Diagonal implements INeighborhood {
 	public final static Diagonal instance = new Diagonal ();
 
@@ -25,11 +28,9 @@ public class Diagonal implements INeighborhood {
 
 	public Set<Position> getNeighbors (Position pos, int radius) {
 		Set<Position> ret = new HashSet<> ();
-		if (pos.getLength () <= 1) {
-			int coord = pos.getHead ();
-			ret.add (Position.create (coord + radius));
-			ret.add (Position.create (coord - radius));
-		} else {
+		if (pos.isEmpty ()) { ret.add (Position.NIL); }
+		else
+		{
 			int coord = pos.getHead ();
 			Position tailCoords = pos.getTail ();
 			for (Position subposition : getNeighbors (tailCoords, radius)) {

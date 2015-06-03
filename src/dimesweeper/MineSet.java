@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
- * @author S.Bachmann
+ * @author sofias.
  */
 public class MineSet extends HashSet<Position> {
 	private static final long serialVersionUID = 1L;

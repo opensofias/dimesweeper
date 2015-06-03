@@ -43,19 +43,13 @@ public abstract class Position {
 		}
 
 		@Override
-		public boolean isEmpty () {
-			return true;
-		}
+		public boolean isEmpty () { return true; }
 
 		@Override
-		public int getLength () {
-			return 0;
-		}
+		public int getLength () { return 0; }
 
 		@Override
-		public boolean equals (Position pos) {
-			return this == pos;
-		}
+		public boolean equals (Position pos) { return this == pos; }
 
 		@Override
 		public int hashCode () {
@@ -106,6 +100,21 @@ public abstract class Position {
 		@Override
 		public int hashCode () {
 			return Objects.hash (head, tail);
+		}
+		
+		@Override
+		public String toString ()
+		{
+			String result = "";
+			result += "(position ";
+			Position pos = this;
+			for (int i = 1; i < this.length; i++)
+			{
+				result += this.getHead () + " ";
+				pos = pos.getTail ();
+			}
+			result += ")";
+			return result;
 		}
 	}
 }

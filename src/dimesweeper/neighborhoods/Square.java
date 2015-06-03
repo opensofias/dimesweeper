@@ -12,25 +12,18 @@ import java.util.Set;
 public class Square implements INeighborhood {
 	public final static Square instance = new Square ();
 
-	private Square () {
-	}
+	private Square () {}
 
 	@Override
-	public Set<Position> getNeighborPositions (Position pos, int radius) {
-		int currentCoordinate = pos.getHead ();
+	public Set<Position> getNeighborPositions (Position pos, int radius)
+	{
 		Set<Position> ret = new HashSet<> ();
 
-		if (pos.getLength () <= 1) { /* base case */
-			for (int i = -radius; i <= radius; i++) {
-				ret.add (Position.create (currentCoordinate + i));
-			}
-		} else {
-			for (Position subposition : getNeighborPositions (pos.getTail (), radius)) {
-				for (int i = -radius; i <= radius; i++) {
-					ret.add (subposition.prepend (currentCoordinate + i));
-				}
-			}
-		}
+		if (pos.isEmpty ()) ret.add (Position.NIL);
+		else
+			for (Position subposition : getNeighborPositions (pos.getTail (), radius))
+				for (int i = -radius; i <= radius; i++)
+					ret.add (subposition.prepend (pos.getHead () + i));
 
 		return ret;
 	}

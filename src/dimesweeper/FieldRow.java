@@ -11,7 +11,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * @author S.Bachmann
+ * @author sofias.
  */
 public class FieldRow extends JPanel {
 	private static final long serialVersionUID = 1L;

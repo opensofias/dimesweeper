@@ -18,17 +18,17 @@ public class Orthogonal implements INeighborhood {
 	@Override
 	public Set<Position> getNeighborPositions (Position pos, int radius) {
 		Set<Position> ret = new HashSet<> ();
-		int currentCoord = pos.getHead ();
+		int currentHead = pos.getHead ();
 		Position subcoordinates = pos.getTail ();
 
 		for (int delta = -radius; delta <= radius; delta++) {
 			if (delta == 0) continue;
-			ret.add (subcoordinates.prepend (currentCoord + delta));
+			ret.add (subcoordinates.prepend (currentHead + delta));
 		}
 
 		if (!subcoordinates.isEmpty ()) {
 			for (Position subposition : getNeighborPositions (subcoordinates, radius)) {
-				ret.add (subposition.prepend (currentCoord));
+				ret.add (subposition.prepend (currentHead));
 			}
 		}
 
