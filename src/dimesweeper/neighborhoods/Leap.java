@@ -13,7 +13,8 @@ import java.util.Set;
 public class Leap implements INeighborhood
 {
 	protected final DropList <Integer> pattern = new DropList<> ();
-	
+
+	public Leap () {}
 	public Leap (LinkedList <Integer> pattern) 
 	{ 
 		this.pattern.addAll (pattern); 
