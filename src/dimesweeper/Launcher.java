@@ -3,6 +3,7 @@
  */
 package dimesweeper;
 
+import dimesweeper.Game.NeighboorhoodType;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
@@ -156,6 +157,7 @@ public class Launcher extends JFrame {
         typeNames.put("square", Game.NeighboorhoodType.SQUARE);
         typeNames.put("orthogonal", Game.NeighboorhoodType.ORTHOGONAL);
         typeNames.put("diagonal", Game.NeighboorhoodType.DIAGONAL);
+		typeNames.put ("knight", NeighboorhoodType.KNIGHT);
         neighboorhoodTypeNames = Collections.unmodifiableMap(typeNames);
 
         Map<String, Game.NeighboorhoodWrap> typeWraps = new HashMap<>();

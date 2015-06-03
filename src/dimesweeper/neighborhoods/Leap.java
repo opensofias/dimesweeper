@@ -12,9 +12,12 @@ import java.util.Set;
  */
 public class Leap implements INeighborhood
 {
-	private final DropList <Integer> pattern;
+	protected final DropList <Integer> pattern = new DropList<> ();
 	
-	public Leap (DropList <Integer> pattern) { this.pattern = pattern; }
+	public Leap (LinkedList <Integer> pattern) 
+	{ 
+		this.pattern.addAll (pattern); 
+	}
 	
 	@Override
 	public Set<Position> getNeighborPositions (Position pos, int radius)
@@ -34,7 +37,7 @@ public class Leap implements INeighborhood
 				
 				for (Position subposition : newLeap.getNeighborPositions (pos.getTail (), radius))
 				{
-					for (int i = 1; i < radius; i++)
+					for (int i = 1; i <= radius; i++)
 					{
 						result.add (subposition.prepend (pos.getHead () + i * displacement));
 						result.add (subposition.prepend (pos.getHead () - i * displacement));
@@ -42,7 +45,6 @@ public class Leap implements INeighborhood
 				}
 			}
 		}
-		
 		return result;
 	}
 	
