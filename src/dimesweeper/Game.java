@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public class Game extends JFrame
 {
-    public enum NeighboorhoodType { SQUARE, ORTHOGONAL, DIAGONAL, TRIAGONAL, QUADRAGONAL, VERTICES, KNIGHT }
+    public enum NeighboorhoodType { SQUARE, ORTHOGONAL, DIAGONAL, TRIAGONAL, QUADRAGONAL, VERTICES, KNIGHT, ULTRAKNIGHT }
     public enum NeighboorhoodWrap { NO, TORUS, REFLECT_EDGE, REFLECT_CELL }
 
 	private static final long serialVersionUID = 1L;
@@ -77,6 +77,7 @@ public class Game extends JFrame
 			case QUADRAGONAL: this.neighborhoodType = Quadragonal.instance; break;
             case VERTICES: this.neighborhoodType = Vertices.instance; break;
 			case KNIGHT: this.neighborhoodType = Knight.instance; break;
+			case ULTRAKNIGHT: this.neighborhoodType = UltraKnight.instance; break;
             default:
                 throw new RuntimeException ("Unimplemented neighborhood type");
         }
@@ -149,7 +150,7 @@ public class Game extends JFrame
 
 	public final void won () {
 		end ();
-		JOptionPane.showMessageDialog (this, "you won." + (mineCount == 0 ? "\nfor sure." : ""), "congraz", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog (this, "you won." + (mineCount == 0 ? "\nand you didn't even need mines." : ""), "congraz", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public final Set<Position> findNeighbors (Position position) {

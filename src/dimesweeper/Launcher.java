@@ -161,6 +161,7 @@ public class Launcher extends JFrame {
 		typeNames.put("quadragonal", Game.NeighboorhoodType.QUADRAGONAL);
         typeNames.put("vertices", Game.NeighboorhoodType.VERTICES);
 		typeNames.put ("knight", NeighboorhoodType.KNIGHT);
+		typeNames.put ("ultraknight", NeighboorhoodType.ULTRAKNIGHT);
         neighboorhoodTypeNames = Collections.unmodifiableMap(typeNames);
 
         Map<String, Game.NeighboorhoodWrap> typeWraps = new HashMap<>();

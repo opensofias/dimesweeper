@@ -5,12 +5,13 @@
         <group>
             <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/neighborhoods/Leap.java</file>
             <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/Launcher.java</file>
+            <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/neighborhoods/Diagonal.java</file>
             <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/FieldRow.java</file>
             <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/neighborhoods/Square.java</file>
             <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/Boxlet.java</file>
+            <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/neighborhoods/UltraKnight.java</file>
             <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/INeighborhood.java</file>
             <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/neighborhoods/Vertices.java</file>
-            <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/neighborhoods/Knight.java</file>
             <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/Game.java</file>
             <file>file:/C:/Users/sofias/Documents/NetBeansProjects/Dimesweeper/src/dimesweeper/positions/Position.java</file>
         </group>

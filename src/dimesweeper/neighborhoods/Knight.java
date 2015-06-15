@@ -6,9 +6,6 @@
 package dimesweeper.neighborhoods;
 
 import dimesweeper.INeighborhood;
-import dimesweeper.positions.Position;
-import java.util.LinkedList;
-import java.util.Set;
 
 /**
  *
