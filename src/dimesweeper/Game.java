@@ -27,11 +27,11 @@ public class Game extends JFrame
 	private static final long serialVersionUID = 1L;
 
 	private final Integer mineCount;
-	public MineSet mines;
-
-	private Integer flagCount;
-	public final HashSet<Position> flags;
-
+	public final PositionSet mines = new PositionSet ();
+	public final PositionSet flags = new PositionSet ();
+	public final PositionSet moves = new PositionSet ();
+	public final PositionSet revealed = new PositionSet ();
+	
 	public Integer revealedCount = 0;
 	private Integer boxletCount = 1;
 
@@ -45,16 +45,6 @@ public class Game extends JFrame
 
 	public boolean firstClick, hints;
 
-	public Game (Integer fieldX, Integer fieldY, Integer mineCount) {
-		this (construct2D (fieldX, fieldY), mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWrap.NO);
-	}
-
-	private static ArrayList<Integer> construct2D (Integer x, Integer y) {
-		ArrayList<Integer> result = new ArrayList<> ();
-		result.add (x);
-		result.add (y);
-		return result;
-	}
 
 	public Game (ArrayList<Integer> fieldSize, Integer mineCount) {
 		this (fieldSize, mineCount, NeighboorhoodType.SQUARE, 1, NeighboorhoodWrap.NO);
@@ -91,8 +81,6 @@ public class Game extends JFrame
                 throw new RuntimeException ("Unimplemented wrap type");
         }
 
-		flags = new HashSet <> ();
-		
 		field = new FieldRow (fieldSize, Position.NIL, this);
 
 		boxletCount = countBoxlets (this.fieldSize);
@@ -113,12 +101,12 @@ public class Game extends JFrame
 	}
 
 	public final void firstClick (Position click) {
-		mines = new MineSet (mineCount, fieldSize, click);
+		mines.fillRandomlyWithout (mineCount, fieldSize, click);
 		this.firstClick = false;
 	}
 
 	public Integer flagsLeft () {
-		return mineCount - flagCount;
+		return mineCount - flags.size ();
 	}
 
 	public Boxlet getBoxlet (Position pos) {

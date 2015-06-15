@@ -1,6 +1,7 @@
 package dimesweeper.neighborhoods;
 
 import dimesweeper.INeighborhood;
+import dimesweeper.PositionSet;
 import dimesweeper.positions.Position;
 
 import java.util.HashSet;
@@ -15,9 +16,9 @@ public class Square implements INeighborhood {
 	private Square () {}
 
 	@Override
-	public Set<Position> getNeighborPositions (Position pos, int radius)
+	public PositionSet getNeighborPositions (Position pos, int radius)
 	{
-		Set<Position> ret = new HashSet<> ();
+		PositionSet ret = new PositionSet ();
 
 		if (pos.isEmpty ()) ret.add (Position.NIL);
 		else

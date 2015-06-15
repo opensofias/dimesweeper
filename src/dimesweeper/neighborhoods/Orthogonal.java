@@ -1,6 +1,7 @@
 package dimesweeper.neighborhoods;
 
 import dimesweeper.INeighborhood;
+import dimesweeper.PositionSet;
 import dimesweeper.positions.Position;
 
 import java.util.HashSet;
@@ -16,8 +17,8 @@ public class Orthogonal implements INeighborhood {
 	}
 
 	@Override
-	public Set<Position> getNeighborPositions (Position pos, int radius) {
-		Set<Position> ret = new HashSet<> ();
+	public PositionSet getNeighborPositions (Position pos, int radius) {
+		PositionSet ret = new PositionSet ();
 		int currentHead = pos.getHead ();
 		Position subcoordinates = pos.getTail ();
 

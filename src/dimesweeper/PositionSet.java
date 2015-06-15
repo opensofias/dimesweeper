@@ -12,7 +12,7 @@ import java.util.HashSet;
 /**
  * @author sofias.
  */
-public class MineSet extends HashSet<Position> {
+public class PositionSet extends HashSet<Position> {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -21,21 +21,16 @@ public class MineSet extends HashSet<Position> {
 	 * @param firstMove
 	 */
 
-	public MineSet (Integer mineCount, ArrayList<Integer> fieldSize, Position firstMove) {
+	public PositionSet () {};
+	
+	public void fillRandomlyWithout (Integer mineCount, ArrayList<Integer> fieldSize, Position firstMove)
+	{
 		add (firstMove);
-		buildMineSet (mineCount, fieldSize);
+		fillRandomly (mineCount, fieldSize);
 		remove (firstMove);
 	}
 
-	/**
-	 * @param mineCount
-	 * @param fieldsize
-	 */
-	public MineSet (int mineCount, ArrayList<Integer> fieldsize) {
-		buildMineSet (mineCount, fieldsize);
-	}
-
-	private void buildMineSet (int mineCount, ArrayList<Integer> fieldsize) {
+	public void fillRandomly (int mineCount, ArrayList<Integer> fieldsize) {
 		while (size () < mineCount) {
 			PositionBuilder mine = new PositionBuilder ();
 
